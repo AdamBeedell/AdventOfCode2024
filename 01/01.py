@@ -1035,3 +1035,18 @@ for l, r in zip(left, right):
 
 answer = sum(differences)
 print(answer)
+
+
+#### 2nd problem
+
+left_simmilarity_score = []
+right_simmilarity_score = []
+
+for l in left:
+    left_simmilarity_score.append(right.count(l)*l)
+
+for r in right:
+    right_simmilarity_score.append(left.count(r)*r)
+
+print(sum(left_simmilarity_score))
+print(sum(right_simmilarity_score)) 
