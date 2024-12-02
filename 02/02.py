@@ -1078,3 +1078,68 @@ for result in results:
 safecount = len([result for result in results if result["safety"] == "safe"])
 
 print(safecount)
+
+
+
+### 2nd problem ARG. Any one bad within the report can be ignored.
+
+unsafe = 0 ## i did nicely marked up output last time
+
+for result in results: 
+    print(result["diff"])
+
+    stack = []
+    dampenercharge = 1
+    for dif in result["diff"]:
+        usedampener = 0
+        ## Compare steady, if not use dampener
+        if dif >3 or dif <-3: 
+            usedampener = 1
+        ## Mark sign
+        if dif < 0: 
+            sign = "neg"
+        if dif > 0: 
+            sign = "pos"
+        if dif == 0: 
+            sign = "neu"
+            usedampener = 1 ## if neutral use the dampener
+            if dampenercharge > 0:
+                dampenercharge -= 1 ##if available
+                print(f"fired dampener to remove {dif}")
+                break ## fire
+            else: 
+                unsafe += 1 ## if unavailable, mark unsafe
+                print(f"out of dampener charges, marked unsafe on {dif}")
+                break ## no need for further processing
+        
+        if len(stack) == 0: #if new stack then
+            stack.append({"dif": dif, "sign": sign}) # add to stack
+            print("new stack")
+            print(f"{dif} goes on the stack")
+                
+        else: ## if not a new stack
+            ##Compare signs to stack -1
+            if sign != stack[-1]["sign"]:
+                usedampener = 1  ## if changing directions, bad
+            
+            if usedampener == 0: ## if no need to purge, add to stack
+                stack.append({"dif": dif, "sign": sign})
+                print(f"{dif} goes on the stack")
+            else:  ## else blow it up and use a charge
+                if dampenercharge > 0: 
+                    print(f"fired dampener to remove {dif}")
+                    dampenercharge -= 1
+                else: 
+                    unsafe += 1 ## if unavailable, mark unsafe
+                    print(f"out of dampener charges, marked unsafe on {dif}")
+                    break ## no need for further processing    
+        
+
+    print(stack)
+print (len(results)-unsafe)
+
+
+
+### this does not produce the right results, and turns out I misunderstood the question, leaving for posterity/frustration
+
+## main thing learned here was "for i in range(1, len(report)):" as a very tidy way of avoiding programming in end of range/start of range index OOB stuff.
