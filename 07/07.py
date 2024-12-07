@@ -3,7 +3,7 @@
 ## do math
 
 from itertools import product
-import pandas as pd
+#import pandas as pd
 import operator as opr8
 
 sampleinput = """456255051: 518 367 3 35 39 7 8
@@ -871,10 +871,15 @@ for a in sampleinput:
 
     ### for some reason this halted the first few times and then went away on it's own idk?
 
-operations = {"+": opr8.add,
-              "*": opr8.mul}
+def conc(x,y):
+    return int(f"{str(x)}{str(y)}")
 
-ops = ["+","*"]
+
+operations = {"+": opr8.add,
+              "*": opr8.mul,
+              "||": conc} ### remove this operator for pt1, and below
+
+ops = ["+","*","||"] ### here
 
 
 def intersperse(x, y):
@@ -887,7 +892,7 @@ def intersperse(x, y):
 
 def evaluate(expression): ## Veeeery much not universal
     result = int(expression[0])  # Start with the first number
-    for i in range(1, len(expression), 2):  # The expressions will be n+n+n.. starts with an operator, then moves by 2, within the loop, moves by one to find the next num
+    for i in range(1, len(expression), 2):  # The expressions will be n+n+n.. starts with an operator, then moves by 2, within the loop, moves by one to find the next num ### COOL
         func = operations[expression[i]]  # Get the corresponding function
         next_number = int(expression[i + 1]) # Get next number
         result = func(result, next_number)  # Apply the operation
