@@ -1,0 +1,33 @@
+###08.py
+
+### grid stuff with antennas and antinodes
+
+### decided to start with the smaller inputs now, as I had 2 working codes/failed solutions and some of the main ones take a while to compute
+input = """............
+........0...
+.....0......
+.......0....
+....0.......
+......A.....
+............
+............
+........A...
+.........A..
+............
+............"""
+
+### import grid
+
+### I think i need to find all the characters then
+
+### Make lines between the characters/pair characters of the same type
+
+### Extend the lines out to find the antinode, those are at a[y][x] - delta(a,b) and b[y][x] + delta(a,b) or something like that.
+### Any point on the line where distance to one is double distance to the other.
+
+### Not sure why there isnt an internal antinode pair,  ..#..a##a..#.. , external pair are at d3 and d6, and internal pair are at d1 and d2
+## even seems to be the external set as as far way from a or b as a is from b
+### odd example  .#...a...a...#
+## I think they may have set up this board to avoid even distances. If so this probably comes in part 2. Weird.
+
+
