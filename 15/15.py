@@ -132,6 +132,7 @@ def update_map_with_shunt(y, x, dir, themap, shunt):
     
     # Update the map with the new values from shunt
     for i, value in enumerate(shunt):
+        i+=1
         current_y = y + i * delta_y
         current_x = x + i * delta_x
         
@@ -171,3 +172,5 @@ for dir in input:
             
 
 
+#for i, value in enumerate(shunt):
+#    print(i)
