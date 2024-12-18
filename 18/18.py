@@ -60,9 +60,12 @@ len(actualmap[0])
 
 ### populate map
 
-for i in input:
+for i in input[:12]:
     x, y = i.split(',')
     testmap[int(y)][int(x)] = '#' 
+
+for line in testmap:
+    print(line)
 
 ### DFS
 
