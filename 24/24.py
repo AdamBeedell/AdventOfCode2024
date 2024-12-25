@@ -31,11 +31,42 @@ inputb = inputb.splitlines()
 
 ## in order to be able to simulate the gates waiting i'd need to set the gates up first I think?
 
-gates = {}
-for gate in inputb:
-    gate = gate.split(' ') ### not sure if best to split here or have this as the whole key
-    gates.add()### something here
+## each wire should be a key, and it's value should be the value,
 
+#ops = {
+#    'AND': &,
+#    'OR': |,
+#    'XOR': ^
+#}
 
 ## leaving house for xmas soon
 
+def doOps(string):   ### each reference to string[0] and [2] need to be replaced with a lookup
+    strings = string.split(' ')
+    if string[1] == 'XOR':
+        return int(string[0]) ^ int(string[2])
+    if string[1] == 'OR':
+        return int(string[0]) | int(string[2])
+    if string[1] == 'AND':
+        return int(string[0]) & int(string[2])
+
+
+gates = {}
+wires = {}
+
+for wire in inputa:
+    line = wire.split(': ')
+    wires[line[0]] = line[1]
+
+for gate in inputb:
+    gate = gate.split(' ') ### not sure if best to split here or have this as the whole key
+    gates.setdefault().add()### something here
+    doOps(gate)
+
+
+
+
+## then each gate should also be a key in another structure?
+
+
+    
