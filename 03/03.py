@@ -29,3 +29,37 @@ for mul in search:
 
 answer = sum(results)
 print(answer)   
+
+### part 2 is about the do() and don't() tokens, anything after a dont before a do is removed. I think i can just delete these...
+
+#doregex = r"do\(\)"
+#dontregex = r"don't\(\)"
+donttodoregex = r"don't\(\)[\d\D]*?do\(\)" ### had an issue here with not using lazy lookahead "?"
+
+
+search = re.findall(donttodoregex, input)
+
+for badblock in search:
+    input = input.replace(badblock,'')
+
+
+### code from earlier
+
+search = re.findall(regex, input)
+results = []
+
+
+
+### multiply results
+for mul in search:
+    print(mul)
+    mul = mul[mul.index("(")+1:mul.index(")")]
+    numbers = [int(num) for num in mul.split(",")]  ## could have regexed again but looked to try the SQL SUBSTRING equivalent this time
+    print(f"multiplying {numbers[0]} * {numbers[1]} = {numbers[0]*numbers[1]}")
+    results.append(numbers[0]*numbers[1])
+
+## add results
+
+answer = sum(results)
+print(answer)   
+
