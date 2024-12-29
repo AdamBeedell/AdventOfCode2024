@@ -1442,9 +1442,12 @@ def checkrules(updatelist, rules):
 
 ### Validate updates
 validitems = []
+invaliditems = [] ### added for pt 2
 for update in updates:
     if checkrules(update, frules):
         validitems.append(update)
+    else: 
+        invaliditems.append(update)
 
 ### once found, locate the middle item and sum them
 
@@ -1459,5 +1462,37 @@ for items in validitems:
 
 print(result)
 
+#### pt 2
 
 
+def checkrules2(updatelist, rules):
+    for before, after in rules:
+        if before in updatelist and after in updatelist:
+            if updatelist.index(before) > updatelist.index(after):
+                return False, (before,after)  # Rule is violated
+    return True, "Ohkay Boss"  # All rules are satisfied
+
+solved = []
+
+for items in invaliditems:
+    items = items.split(",")
+    ruletofix = checkrules2(items, frules)
+    while not ruletofix[0]:
+        print (ruletofix)
+        ### swap beforeindex with afterindex-1
+        b4i = items.index(ruletofix[1][0])
+        if items.index(ruletofix[1][1]) == 0:
+            afti = (items.index(ruletofix[1][1]))
+        else:
+            afti = (items.index(ruletofix[1][1]))-1
+        items[b4i], items[afti] = items[afti], items[b4i]
+        print(f"swapped {items[b4i]} and {items[afti]}")
+        ruletofix = checkrules2(items, frules)
+        print(items)
+    solved.append(items)
+    print (f"solved {items}")
+
+
+
+
+#items = invaliditems[0]
