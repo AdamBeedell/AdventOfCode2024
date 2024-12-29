@@ -2,6 +2,36 @@
 
 #### print queue
 
+orderingrules = """47|53
+97|13
+97|61
+97|47
+75|29
+61|13
+75|53
+29|13
+97|29
+53|29
+61|53
+97|53
+61|29
+47|13
+75|47
+97|75
+47|61
+75|61
+47|29
+75|13
+53|13"""
+
+updates = """75,47,61,53,29
+97,61,53,29,13
+75,29,13
+75,97,47,61,53
+61,13,29
+97,13,75,29,47"""
+
+
 orderingrules = """91|95
 64|54
 64|53
@@ -1380,6 +1410,8 @@ updates = """34,74,26,89,64,44,55,65,53,16,18,95,73,82,43
 93,74,96,57,64,44,55,53,18,95,73,41,63
 54,29,79,91,99,92,93"""
 
+
+
 #### parse the input
 
 ## rules
@@ -1418,9 +1450,12 @@ for update in updates:
 
 result = 0
 for items in validitems:
+    #print(items)
+    items = items.split(',')  ### first answer was wrong because i lost the list of lists type somewhere, became a string.
     middle = items[len(items) // 2] ### assumes a odd numbered string, I figure that's a given based on the question
+    #print(middle)
     result += int(middle)
-
+    #print(result)
 
 print(result)
 
