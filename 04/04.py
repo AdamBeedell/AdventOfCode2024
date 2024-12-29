@@ -143,6 +143,17 @@ SAXSASMASAMMSAXMMSAMMMAXMAMXMXMSXSASXSMMMAMXSAXAMMMMMMMAMSAAXAMXMMAMAXAMSSXMMSMM
 SMMSAMXAMSSXMMMSAMXSAAAMMSAXMAXAMMAMAAAXSAMXMAMASAAAXAMSAMXMMAMMSXAMMMAMASAMAAAASAMAAAAAXMAMAAASAMXXAAAAAMMMXMXMAXASXSMSXMSSMMXMSAMXXSMSMSAA
 XSAMMMMMSXMXAMXMXSMXXMSSXASAMXMSSMMMSMAMAMXXMSMSSMSSSXSAMXMXSAMXASASXSXMXSMMSSSMSXMMMMSAMXSSMMASMMSMSSSMXSAMXAXMASAMSAMXMAXMASXAAXMSAMXMASMS"""
 
+#input = """MMMSXXMASM
+#MSAMXMSMSA
+#AMXSXMAAMM
+#MSAMASMSMX
+#XMASAMXAMM
+#XXAMMXXAMA
+#SMSMSASXSS
+#SAXAMASAAA
+#MAMMMXMMMM
+#MXMXAXMASX"""
+
 search="XMAS"
 
 ##### Make a variable that's a grid of these
@@ -358,3 +369,74 @@ def eightwayfull(y, x, find):
 
     # Combine all results into a single list
     return [east, west, north, south, nw, ne, sw, se]
+
+
+
+
+### end of pt 1
+
+
+## find the As, will start there
+
+searchresults2=[]
+y=0
+for line in grid:
+    x=0
+    for char in line:
+        if char == "A":
+            searchresults2.append((y,x))
+        x+=1
+    y+=1
+
+
+
+#grid[139][38]
+
+matches = 0
+
+### useful directions
+### 
+###     M M       S S       M S      S M      
+###      A         A         A        A       
+###     S S       M M       M S      S M      
+###
+### [y-1, x-1] top left
+### [y-1, x+1] top right
+### [y+1, x-1] bottom left
+### [y+1, x+1] bottom right
+
+
+def index_exists(lst, index):
+    return 0 <= index and index < len(lst)
+
+
+
+def findcrossmas(grid, y, x):
+    if index_exists(grid, y+1) and index_exists(grid, y-1) and index_exists(grid[y], x+1) and index_exists(grid[y], x-1):
+        if grid[y-1][x-1] in ('M','S'):
+            radia = ""
+            radia += grid[y-1][x-1]
+            radia += grid[y-1][x+1]
+            radia += grid[y+1][x+1]
+            radia += grid[y+1][x-1]
+            if radia in ("MMSS","SMMS","SSMM","MSSM"):
+                return True
+            else:
+                return False
+        else: 
+            return False
+    else: 
+        return False
+
+
+for a in searchresults2:
+    #print(a[0])
+    #print(a[1])
+    if findcrossmas(grid, a[0], a[1]):
+        print ((a[0], a[1]))
+        matches += 1
+
+print(matches)
+
+
+#findcrossmas(grid, 1,2)
