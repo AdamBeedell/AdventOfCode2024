@@ -131,6 +131,7 @@ map = """.#......................................#................#....#.......#
 .....#...............#...##...........#..................#........................................#.....#.....#...................
 ....#.....................................#..........#..........#..#.....#...#....#...#...............#..........................#"""
 
+
 ### there is a map, a guard and obstacles, the guard is marked ^ denoting location + direction
 ### guard's rules are as follows:
 ## walk till obstacle, then turn 90 degrees right
@@ -193,6 +194,8 @@ def nextmove(y,x, dir, map):
 locations = []
 state = nextmove(start[1][0],start[1][1], map[start[1][0]][start[1][1]], map)
 while state[3] == True:
+    if map[int(state[0])][int(state[1])] == '.':
+        map[state[0]] = map[state[0]][:state[1]] + 'X' + map[state[0]][state[1]+1:]  # Mark path
     state = nextmove(state[0], state[1], state[2], map)  ## y, x, keeprunning
     print(f"{state[0]}, {state[1]}, {state[2]}")
     locations.append([state[0], state[1]])
@@ -202,4 +205,11 @@ while state[3] == True:
 
 unique_locations = list(set(tuple(coord) for coord in locations))
 
-print(len(unique_locations)) 
+print(len(unique_locations)+1) 
+
+
+
+
+#### this produced output, but seems to be incorrect.
+#### trying with the map update method for visuals
+
