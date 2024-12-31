@@ -79,13 +79,17 @@ nextdirendoftheline = {
 
 def hasspace(lst):
     found_dot = False
-    for i, char in enumerate(lst):
-        if char == "O" and i > 0:  # Skip the first "O" since it's guaranteed
-            if not found_dot:  # If we see an "O" without a preceding "."
-                return False
-        elif char == ".":  # If we find a ".", mark it as found
-            found_dot = True
-    return True
+    found_hash = False
+    while not found_dot and not found_hash:  ### until we find a space for movement or an obstacle forbidding it
+        for char in lst:
+            if char == ".":
+                found_dot = True
+            if char == "#":
+                found_hash = True
+    if found_dot:
+        return True
+    if found_hash:
+        return False
 
 ## if no obstruction, update location with coord deltas
 #dir = '>'
@@ -106,6 +110,8 @@ def validmove(y,x, dir, themap):
                 lst = nextdirendoftheline[dir]
                 if hasspace(lst):
                     return True, lst
+                else:
+                    return False, lst
                 ### do dir lookup of function to get to the end of the line
                 ### look to the end of the line
             else:
@@ -148,8 +154,9 @@ y = start[1][0]
 x = start[1][1]
 
 for dir in input:
+    print(dir)
     nxt = validmove(y, x, dir, themap)
-    if nxt[0] == False:
+    if nxt[0] == False: ### blocked, skip
         continue
     else:
         if nxt[0] and nxt[1] == ".": ## free space, move the bot
@@ -157,18 +164,20 @@ for dir in input:
             y=nxt[2]
             x=nxt[3]
             themap[y][x] = "@"
-        else:
+        else: #### the complicated bit - Moving Os about
+            themap[y][x] = "."
             restofline = nxt[1]
             print(f"Rest of line: {restofline}")  # Debug the extracted line
 
-            shunt = processlist(restofline)
+            shunt = processlist(restofline) #### this is wrong right now
             print(f"Shunt after processing: {shunt}")  # Debug processed shunt
 
             if shunt:
                 update_map_with_shunt(y, x, dir, themap, shunt)
             else:
                 print("Error: Shunt returned None or invalid list!")
-    print(themap)
+    for line in themap:
+        print(line)  # Debugging  
             
 
 
